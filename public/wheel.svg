@@ -1,0 +1,37 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+
+  
+  <!-- Wheel segments with grayscale colors - 12 equal segments (30 degrees each) -->
+  <g id="wheel">
+    <!-- Segment 1 - Black -->
+    <path d="M 200 200 L 200 10 A 190 190 0 0 1 294.52 34.52 Z" fill="#c8aa6e"/>
+    
+    <!-- Segment 2 - White -->
+    <path d="M 200 200 L 294.52 34.52 A 190 190 0 0 1 365.48 105.48 Z" fill="#f8f8f8"/>
+    
+    <!-- Segment 3 - Dark Grey -->
+    <path d="M 200 200 L 365.48 105.48 A 190 190 0 0 1 390 200 Z" fill="#3a3a3a"/>
+    
+    <!-- Segment 4 - Light Grey -->
+    <path d="M 200 200 L 390 200 A 190 190 0 0 1 365.48 294.52 Z" fill="#d4d4d4"/>
+    
+    <!-- Segment 5 - Black -->
+    <path d="M 200 200 L 365.48 294.52 A 190 190 0 0 1 294.52 365.48 Z" fill="#c8aa6e"/>
+    
+    <!-- Segment 6 - White -->
+    <path d="M 200 200 L 294.52 365.48 A 190 190 0 0 1 200 390 Z" fill="#f8f8f8"/>
+    
+    <!-- Segment 7 - Medium Grey -->
+    <path d="M 200 200 L 200 390 A 190 190 0 0 1 105.48 365.48 Z" fill="#6a6a6a"/>
+    
+    <!-- Segment 8 - Light Grey -->
+    <path d="M 200 200 L 105.48 365.48 A 190 190 0 0 1 34.52 294.52 Z" fill="#d4d4d4"/>
+    
+    <!-- Segment 9 - Dark Grey -->
+    <path d="M 200 200 L 34.52 294.52 A 190 190 0 0 1 10 200 Z" fill="#c8aa6e"/>
+    
+    <path d="M 200 200 L 10 200 A 190 190 0 0 1 34.52 105.48 Z" fill="#f8f8f8"/>
+        <path d="M 200 200 L 34.52 105.48 A 190 190 0 0 1 105.48 34.52 Z" fill="#6a6a6a"/>
+        <path d="M 200 200 L 105.48 34.52 A 190 190 0 0 1 200 10 Z" fill="#d4d4d4"/>
+  </g>
+</svg>
