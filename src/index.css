@@ -4,8 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: 'League';
-  src: local('League'), url(./fonts/League.otf) format('otf');
+  font-family: "League";
+  src:
+    local("League"),
+    url(./fonts/League.otf) format("otf");
 }
 
 :root {
