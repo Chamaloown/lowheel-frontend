@@ -1,4 +1,5 @@
 export function colorGenerator() {
-  const couleur = Math.floor(Math.random() * 16777215).toString(16);
-  return "#" + couleur.padStart(6, "0");
+  const greyShade = Math.floor(Math.random() * 256);
+  const hexShade = greyShade.toString(16).padStart(2, "0");
+  return `#${hexShade}${hexShade}${hexShade}`;
 }

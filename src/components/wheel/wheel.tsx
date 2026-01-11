@@ -13,23 +13,25 @@ const generateSegments = (count: number): Segment[] =>
     color: `hsl(${(i * 360) / count}, 70%, 60%)`,
   }));
 
-const Wheel: React.FC<{ count?: number; champions?: string[] }> = ({ count = 40, champions }) => {
+const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champions }) => {
   const segments = useMemo(() => generateSegments(count), [count]);
   const championsSegments = useMemo(() => {
     if (!champions || champions.length === 0) return segments;
-    return champions.map((champion) => ({
+    return champions.map((champion, index) => ({
       label: champion,
-      color: colorGenerator(),
+      color: index % 3 === 0 ? "#C8AA6E" : colorGenerator(),
     }));
   }, [champions, segments]);
 
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
 
-  const size = 400;
+  const size = 800;
   const center = size / 2;
   const radius = center - 10;
   const angleStep = 360 / segments.length;
+  const textRadius = championsSegments.length > 20 ? radius - 80 : radius - 40;
+
 
   const spin = () => {
     if (isSpinning) return;
@@ -42,7 +44,6 @@ const Wheel: React.FC<{ count?: number; champions?: string[] }> = ({ count = 40,
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px" }}>
       <div style={{ position: "relative", width: size, height: size }}>
-        {/* Flèche indicatrice */}
         <div
           style={{
             position: "absolute",
@@ -71,7 +72,6 @@ const Wheel: React.FC<{ count?: number; champions?: string[] }> = ({ count = 40,
             const startAngle = i * angleStep;
             const endAngle = (i + 1) * angleStep;
 
-            // Calcul des coordonnées de l'arc SVG
             const x1 = center + radius * Math.cos((Math.PI * (startAngle - 90)) / 180);
             const y1 = center + radius * Math.sin((Math.PI * (startAngle - 90)) / 180);
             const x2 = center + radius * Math.cos((Math.PI * (endAngle - 90)) / 180);
@@ -82,28 +82,26 @@ const Wheel: React.FC<{ count?: number; champions?: string[] }> = ({ count = 40,
             return (
               <g key={i}>
                 <path d={pathData} fill={seg.color} stroke="white" strokeWidth="0.5" />
-                {/* Texte incliné radialement */}
                 <text
                   x={
                     center +
-                    (radius - 40) * Math.cos((Math.PI * (startAngle + angleStep / 2 - 90)) / 180)
+                    textRadius * Math.cos((Math.PI * (startAngle + angleStep / 2 - 90)) / 180)
                   }
                   y={
                     center +
-                    (radius - 40) * Math.sin((Math.PI * (startAngle + angleStep / 2 - 90)) / 180)
+                    textRadius * Math.sin((Math.PI * (startAngle + angleStep / 2 - 90)) / 180)
                   }
                   fill="white"
-                  fontSize={count > 30 ? "6" : "10"}
+                  fontSize={16}
                   fontWeight="bold"
                   textAnchor="middle"
                   alignmentBaseline="middle"
-                  transform={`rotate(${startAngle + angleStep / 2}, ${
-                    center +
-                    (radius - 40) * Math.cos((Math.PI * (startAngle + angleStep / 2 - 90)) / 180)
-                  }, ${
-                    center +
-                    (radius - 40) * Math.sin((Math.PI * (startAngle + angleStep / 2 - 90)) / 180)
-                  })`}
+                  transform={`rotate(${startAngle + angleStep / 2}, ${center +
+                    textRadius * Math.cos((Math.PI * (startAngle + angleStep / 2 - 90)) / 180)
+                    }, ${center +
+                    textRadius * Math.sin((Math.PI * (startAngle + angleStep / 2 - 90)) / 180)
+                    })`}
+                  writingMode={championsSegments.length > 20 ? "vertical-rl" : "horizontal-tb"}
                 >
                   {seg.label}
                 </text>
@@ -113,11 +111,11 @@ const Wheel: React.FC<{ count?: number; champions?: string[] }> = ({ count = 40,
         </svg>
       </div>
       <button
+        className="animate-pulse text-4xl bg-[#C8AA6E] hover:bg-[#C8AAAA] text-white font-bold py-4 px-8 rounded-full shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={spin}
         disabled={isSpinning}
-        style={{ padding: "10px 20px", cursor: "pointer" }}
       >
-        Lancer la roue ({count} segments)
+        MAKE IT TURN!
       </button>
     </div>
   );

@@ -29,6 +29,7 @@ import { Checkbox } from "./components/ui/checkbox";
 import { Label } from "./components/ui/label";
 import { Textarea } from "./components/ui/textarea";
 
+
 function App() {
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
 
@@ -102,13 +103,9 @@ function App() {
           Fetch Champions
         </Button>
       </div>
-
-      <div className="h-0.5 w-11/12 bg-amber-500"></div>
-
       {champions && (
         <div>
-          <div className="h-0.5 w-11/12 bg-amber-500"></div>
-          <Wheel champions={champions || []} />
+          <Wheel count={champions.length} champions={champions || []} />
         </div>
       )}
 
