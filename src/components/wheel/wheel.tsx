@@ -54,7 +54,7 @@ const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champ
             height: 0,
             borderLeft: "15px solid transparent",
             borderRight: "15px solid transparent",
-            borderTop: "30px solid red",
+            borderTop: "30px solid white",
           }}
         />
 

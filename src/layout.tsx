@@ -6,13 +6,13 @@ import {
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Home, Rss } from "lucide-react";
+import { BookOpen, LoaderPinwheel, Trophy } from "lucide-react";
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
 export function Layout({ children }: { children: React.ReactNode }) {
     const navigationMenuItems = [
-        { title: "Wheel", to: "/", icon: Home },
-        { title: "Success", to: "/success", icon: Rss },
+        { title: "Wheel", to: "/", icon: LoaderPinwheel },
+        { title: "Success", to: "/success", icon: Trophy },
         { title: "About", to: "/about", icon: BookOpen },
     ];
     return (
