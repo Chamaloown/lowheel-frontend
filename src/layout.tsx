@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Link } from "@tanstack/react-router";
 import { BookOpen, LoaderPinwheel, Trophy } from "lucide-react";
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+// import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
 export function Layout({ children }: { children: React.ReactNode }) {
     const navigationMenuItems = [
@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </NavigationMenuList>
             </NavigationMenu>
             <main>{children}</main>
-            <TanStackRouterDevtools />
+            {/* <TanStackRouterDevtools /> */}
 
         </div>
     );
