@@ -9,8 +9,8 @@ interface Segment {
 
 const generateSegments = (count: number): Segment[] =>
   Array.from({ length: count }, (_, i) => ({
-    label: `Lot ${i + 1}`,
-    color: `hsl(${(i * 360) / count}, 70%, 60%)`,
+    label: ``,
+    color: i % 3 === 0 ? "#C8AA6E" : colorGenerator(),
   }));
 
 const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champions }) => {
@@ -26,12 +26,11 @@ const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champ
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
 
-  const size = 800;
+  const size = 700;
   const center = size / 2;
   const radius = center - 10;
   const angleStep = 360 / segments.length;
   const textRadius = championsSegments.length > 20 ? radius - 80 : radius - 40;
-
 
   const spin = () => {
     if (isSpinning) return;

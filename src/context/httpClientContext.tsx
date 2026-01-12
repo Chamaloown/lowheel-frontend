@@ -13,9 +13,7 @@ export const HttpClientProvider = ({ children }: HttpClientProviderProps) => {
 };
 
 export const useHttpClient = (): AxiosInstance => {
-  console.log("useHttpClient called");
   const context = useContext(HttpClientContext);
-  console.log("useHttpClient context:", context);
   if (context === undefined) {
     throw new Error("useHttpClient must be used within a HttpClientProvider");
   }

@@ -7,6 +7,7 @@ import { HttpClientProvider } from "./context/httpClientContext.tsx";
 
 const queryClient = new QueryClient();
 
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HttpClientProvider>

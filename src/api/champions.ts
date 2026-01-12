@@ -1,7 +1,6 @@
 import { httpClient } from "@/api/httpClient";
-import type { Role } from "@/type/role";
 
-export async function getChampions(role: Role | null): Promise<string[]> {
+export async function getChampions(role: string): Promise<string[]> {
   const response = await httpClient.get<string[]>("/champions", {
     params: role ? { role } : {},
   });
