@@ -13,7 +13,13 @@ const generateSegments = (count: number): Segment[] =>
     color: i % 3 === 0 ? 'oklch(0.7509 0.0856 83.92)' : i % 3 === 1 ? 'oklch(0.7509 0 290.12)' : 'oklch(0.3427 0 0)',
   }));
 
-const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champions }) => {
+interface WheelProps {
+  count: number;
+  champions?: string[];
+  onLock?: (segment: { index: number; label: string }) => void;
+}
+
+const Wheel: React.FC<WheelProps> = ({ count, champions, onLock }) => {
   const segments = useMemo(() => generateSegments(count), [count]);
   const championsSegments = useMemo(() => {
     if (!champions || champions.length === 0) return segments;
@@ -31,13 +37,33 @@ const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champ
   const radius = center - 10;
   const angleStep = 360 / segments.length;
   const textRadius = championsSegments.length > 20 ? radius - 80 : radius - 40;
+  const normalized = (360 - (rotation % 360) + angleStep / 2) % 360;
+  const index = Math.floor(normalized / angleStep);
 
   const spin = () => {
     if (isSpinning) return;
-    const newRotation = rotation + 1800 + Math.random() * 360;
+
+    const extraSpins = 5 * 360;
+    const randomOffset = Math.random() * 360;
+    const newRotation = rotation + extraSpins + randomOffset;
+
     setRotation(newRotation);
     setIsSpinning(true);
-    setTimeout(() => setIsSpinning(false), 5000);
+
+    setTimeout(() => {
+      setIsSpinning(false)
+      const angleStep = 360 / championsSegments.length;
+      const normalized =
+        (360 - (newRotation % 360) + angleStep / 2) % 360;
+
+      const index = Math.floor(normalized / angleStep);
+      const segment = championsSegments[index];
+
+      onLock?.({
+        index,
+        label: segment.label,
+      });
+    }, 5000);
   };
 
   return (
@@ -110,7 +136,7 @@ const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champ
         </svg>
       </div>
       <button
-        className="animate-pulse text-4xl bg-golden hover:bg-[#C8AAAA] text-white font-bold py-4 px-8 rounded-full shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        className="animate-pulse text-4xl bg-golden hover:bg-[#C8AAAA] text-white font-bold py-4 px-8 rounded-full shadow-lg disabled:opacity-50 disabled:cursor-not-allowed border-2 border-white"
         onClick={spin}
         disabled={isSpinning}
       >
