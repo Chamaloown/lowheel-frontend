@@ -49,14 +49,14 @@ export function Select({
                      transition-all duration-200
                      backdrop-blur-sm"
         >
-          <option value="" disabled className="bg-[#C8AA6E] text-white-400">
+          <option value="" disabled className="bg-golden text-black">
             {placeholder}
           </option>
           {options.map((option) => (
             <option
               key={option.value}
               value={option.value}
-              className=" bg-[#C8AA6E] text-black py-2"
+              className=" bg-golden text-white py-2"
             >
               {option.label}
             </option>

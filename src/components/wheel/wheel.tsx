@@ -10,7 +10,8 @@ interface Segment {
 const generateSegments = (count: number): Segment[] =>
   Array.from({ length: count }, (_, i) => ({
     label: ``,
-    color: i % 3 === 0 ? 'oklch(0.7509 0.0856 83.92)' : colorGenerator(),
+    //  gold, grey and black colors each for one third of the segments
+    color: i % 3 === 0 ? 'oklch(0.7509 0.0856 83.92)' : i % 3 === 1 ? 'oklch(0.7509 0 290.12)' : 'oklch(0.3427 0 0)',
   }));
 
 const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champions }) => {
@@ -19,7 +20,7 @@ const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champ
     if (!champions || champions.length === 0) return segments;
     return champions.map((champion, index) => ({
       label: champion,
-      color: index % 3 === 0 ? 'oklch(0.7509 0.0856 83.92)' : colorGenerator(),
+      color: index % 3 === 0 ? 'oklch(0.7509 0.0856 83.92)' : index % 3 === 1 ? 'oklch(0.7509 0 290.12)' : 'oklch(0.3427 0 0)',
     }));
   }, [champions, segments]);
 
