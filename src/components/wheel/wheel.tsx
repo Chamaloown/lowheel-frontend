@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import "./wheel.css";
-import { colorGenerator } from "@/lib/colorGenerator";
 
 interface Segment {
   label: string;

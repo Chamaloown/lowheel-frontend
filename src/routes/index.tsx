@@ -21,11 +21,6 @@ function HomeComponent() {
     enabled: !!selectedRole,
   });
 
-  const handleSelectRole = (role: string) => {
-    setSelectedRole(role as Role);
-  }
-
-
   const roleOptions = [
     "Top",
     "Jungle",
@@ -40,10 +35,9 @@ function HomeComponent() {
       <h3>Autofill Wheel and collect your champ!</h3>
       <Select
         options={roleOptions}
-        value={selectedRole as string}
-        onChange={(value) => { handleSelectRole(value) }}
+        value={selectedRole}
+        onChange={(value) => { setSelectedRole(value) }}
         placeholder="Choose a Role"
-        className=''
       />
       <div>
         <Wheel count={champions?.length || 20} champions={champions || []} />
