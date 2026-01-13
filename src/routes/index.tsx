@@ -35,8 +35,8 @@ function HomeComponent() {
   ].map((role) => ({ label: role, value: role }));
 
   return (
-    <div className="flex min-h-svh flex-col items-center p-4 space-y-8">
-      <h1 className="text-9xl mt-8">Lowheel</h1>
+    <div className="flex flex-col items-center p-4 space-y-6">
+      <h1 className="text-9xl">Lowheel</h1>
       <h3>Autofill Wheel and collect your champ!</h3>
       <Select
         options={roleOptions}

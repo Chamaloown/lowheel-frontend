@@ -16,9 +16,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         { title: "About", to: "/about", icon: BookOpen },
     ];
     return (
-        <div className="min-h-svh flex flex-col justify-center items-center mt-4">
-            <NavigationMenu>
-                <NavigationMenuList className="flex flex-row space-x-7">
+        <div className="flex flex-col justify-center items-center my-4">
+            <NavigationMenu className="flex justify-center items-center">
+                <NavigationMenuList className="flex flex-row space-x-7  ">
                     {navigationMenuItems.map((item) => (
                         <NavigationMenuItem key={item.title}>
                             <NavigationMenuLink
@@ -34,6 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     ))}
                 </NavigationMenuList>
             </NavigationMenu>
+            <div className="w-full h-0.5 bg-golden mt-4"></div>
             <main>{children}</main>
             {/* <TanStackRouterDevtools /> */}
 

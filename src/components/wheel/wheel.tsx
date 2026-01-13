@@ -10,7 +10,7 @@ interface Segment {
 const generateSegments = (count: number): Segment[] =>
   Array.from({ length: count }, (_, i) => ({
     label: ``,
-    color: i % 3 === 0 ? "#C8AA6E" : colorGenerator(),
+    color: i % 3 === 0 ? 'oklch(0.7509 0.0856 83.92)' : colorGenerator(),
   }));
 
 const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champions }) => {
@@ -19,7 +19,7 @@ const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champ
     if (!champions || champions.length === 0) return segments;
     return champions.map((champion, index) => ({
       label: champion,
-      color: index % 3 === 0 ? "#C8AA6E" : colorGenerator(),
+      color: index % 3 === 0 ? 'oklch(0.7509 0.0856 83.92)' : colorGenerator(),
     }));
   }, [champions, segments]);
 
@@ -110,7 +110,7 @@ const Wheel: React.FC<{ count: number; champions?: string[] }> = ({ count, champ
         </svg>
       </div>
       <button
-        className="animate-pulse text-4xl bg-[#C8AA6E] hover:bg-[#C8AAAA] text-white font-bold py-4 px-8 rounded-full shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        className="animate-pulse text-4xl bg-golden hover:bg-[#C8AAAA] text-white font-bold py-4 px-8 rounded-full shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={spin}
         disabled={isSpinning}
       >
