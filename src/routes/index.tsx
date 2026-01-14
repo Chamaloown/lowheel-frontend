@@ -51,12 +51,14 @@ function HomeComponent() {
         }}>Verify</Button>
         {isVerified !== null ? isVerified === true ? <Check className='text-green-500 mt-1' /> : <Ban className='text-red-600 mt-1' /> : <></>}
       </div>
-      <Select
-        options={roleOptions}
-        value={selectedRole}
-        onChange={(value) => setSelectedRole(value)}
-        placeholder="Choose a Role"
-      />
+      <div className='w-1/3'>
+        <Select
+          options={roleOptions}
+          value={selectedRole}
+          onChange={(value) => setSelectedRole(value)}
+          placeholder="Choose a Role"
+        />
+      </div>
       <div>
         <Wheel
           count={champions?.length || 20}

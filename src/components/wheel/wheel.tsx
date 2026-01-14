@@ -37,8 +37,6 @@ const Wheel: React.FC<WheelProps> = ({ count, champions, onLock }) => {
   const radius = center - 10;
   const angleStep = 360 / segments.length;
   const textRadius = championsSegments.length > 20 ? radius - 80 : radius - 40;
-  const normalized = (360 - (rotation % 360) + angleStep / 2) % 360;
-  const index = Math.floor(normalized / angleStep);
 
   const spin = () => {
     if (isSpinning) return;
