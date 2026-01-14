@@ -9,7 +9,6 @@
 
 @theme {
   --font-league: League, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --font-montserrat: Montserrat, system-ui, Avenir, Helvetica, Arial, sans-serif;
   --color-golden: oklch(0.7509 0.0856 83.92)
 }
 
