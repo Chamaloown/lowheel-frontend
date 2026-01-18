@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import "./wheel.css";
+import type { Champion } from "@/types/champion";
 
 interface Segment {
   label: string;
@@ -15,7 +16,7 @@ const generateSegments = (count: number): Segment[] =>
 
 interface WheelProps {
   count: number;
-  champions?: string[];
+  champions?: Champion[];
   onLock?: (segment: { index: number; label: string }) => void;
 }
 
@@ -24,7 +25,7 @@ const Wheel: React.FC<WheelProps> = ({ count, champions, onLock }) => {
   const championsSegments = useMemo(() => {
     if (!champions || champions.length === 0) return segments;
     return champions.map((champion, index) => ({
-      label: champion,
+      label: champion.name,
       color: index % 3 === 0 ? 'oklch(0.7509 0.0856 83.92)' : index % 3 === 1 ? 'oklch(0.7509 0 290.12)' : 'oklch(0.3427 0 0)',
     }));
   }, [champions, segments]);

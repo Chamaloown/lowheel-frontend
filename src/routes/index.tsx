@@ -15,10 +15,10 @@ export const Route = createFileRoute('/')({
 
 
 function HomeComponent() {
-  const [selectedRole, setSelectedRole] = useState<string>("");
-  const [selectedName, setSelectedName] = useState<string>("");
-  const [selectedTagLine, setSelectedTagLine] = useState<string>("");
-  const [isVerified, setIsVerified] = useState<boolean | null>(null);
+  const [selectedRole, setSelectedRole] = useState<string>("")
+  const [selectedName, setSelectedName] = useState<string>("")
+  const [selectedTagLine, setSelectedTagLine] = useState<string>("")
+  const [isVerified, setIsVerified] = useState<boolean | null>(null)
 
   const { data: champions } = useQuery({
     queryKey: ["champions", selectedRole],
@@ -32,7 +32,7 @@ function HomeComponent() {
     "Mid",
     "ADC",
     "Support",
-  ].map((role) => ({ label: role, value: role }));
+  ].map((role) => ({ label: role, value: role }))
 
   return (
     <div className="flex flex-col items-center p-4 space-y-6">
