@@ -6,13 +6,15 @@ import {
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, LoaderPinwheel, Trophy } from "lucide-react";
+import { BookOpen, LoaderPinwheel, Swords, Trophy } from "lucide-react";
+import { Toaster } from "sonner";
 
 export function Layout({ children }: { children: React.ReactNode }) {
     const navigationMenuItems = [
         { title: "Wheel", to: "/", icon: LoaderPinwheel },
         { title: "Success", to: "/success", icon: Trophy },
         { title: "About", to: "/about", icon: BookOpen },
+        { title: "Leaderboard", to: "/leaderboard", icon: Swords },
     ];
     return (
         <div className="flex flex-col min-h-screen w-full">
@@ -39,6 +41,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <main className="grow">
                 {children}
             </main>
+            <Toaster />
             <footer className="w-full p-4 text-[10px] text-gray-500 text-center">
                 This website is not affiliated with, endorsed, sponsored, or specifically approved by Riot Games, Inc.
                 League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc.

@@ -1,61 +1,86 @@
 import { getChampions } from '@/api/champions';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { getRoles, type Role } from '@/api/roles';
+import { verify, type Champion } from '@/api/successes';
+import LockDialog from '@/components/lock/LockDialog';
 import Select from '@/components/ui/select';
+import User from '@/components/user/user';
 import Wheel from '@/components/wheel/wheel';
-import { useQuery } from '@tanstack/react-query';
+import WheelDialog from '@/components/wheel/wheelDialog';
+import { useUser } from '@/context/userContext';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router'
-import { Ban, Check } from 'lucide-react';
 import { useState } from 'react';
+import { set } from 'react-hook-form';
+import { toast } from "sonner"
 
 
 export const Route = createFileRoute('/')({
   component: HomeComponent,
 })
 
-
 function HomeComponent() {
-  const [selectedRole, setSelectedRole] = useState<string>("")
-  const [selectedName, setSelectedName] = useState<string>("")
-  const [selectedTagLine, setSelectedTagLine] = useState<string>("")
-  const [isVerified, setIsVerified] = useState<boolean | null>(null)
+  const [selectedRole, setSelectedRole] = useState<Role | null>(null)
+  const [selectedChampion, setSelectedChampion] = useState<Champion | null>(null)
+  const [lockedChampion, setLockedChampion] = useState<Champion | null>(null)
+  const [WheelOpen, setWheelOpen] = useState<boolean>(false)
+  const [LockOpen, setLockOpen] = useState<boolean>(false)
+  const { user } = useUser()
+
+  const { data: roles } = useQuery({
+    queryKey: ["roles"],
+    queryFn: getRoles,
+    enabled: !selectedRole,
+  })
 
   const { data: champions } = useQuery({
     queryKey: ["champions", selectedRole],
-    queryFn: () => getChampions(selectedRole),
+    queryFn: () => getChampions(selectedRole!.name),
     enabled: !!selectedRole,
+  })
+
+  const mutation = useMutation({
+    mutationFn: (variables: { userId: number; championId: number; roleId: number }) =>
+      verify(variables.userId, variables.championId, variables.roleId),
+    onSuccess: (data) => {
+      if (data.statusCode === 200) {
+        toast.success("Success Unlocked. GG!")
+      }
+      if (data.statusCode === 204) {
+        toast.error("Success Locked. Good luck next time")
+      }
+      setLockedChampion(null)
+    },
   });
 
-  const roleOptions = [
-    "Top",
-    "Jungle",
-    "Mid",
-    "ADC",
-    "Support",
-  ].map((role) => ({ label: role, value: role }))
+  const onVerify = () => {
+    if (!user?.id || !lockedChampion || !selectedRole) {
+      toast.error("Missing data for verification (You have to be connected)")
+      setLockedChampion(null)
+      return;
+    }
+
+    mutation.mutate({
+      userId: user.id,
+      championId: lockedChampion.id,
+      roleId: selectedRole.id
+    });
+  };
+
+  const onLockedChampion = (result: Champion) => {
+    setLockedChampion(result)
+    setLockOpen(true)
+  }
 
   return (
-    <div className="flex flex-col items-center p-4 space-y-6">
+    <div className="flex flex-col items-center p-4 space-y-6" >
       <h1 className="text-9xl">Lowheel</h1>
       <h3>Autofill Wheel and collect your champ!</h3>
-      <div className='flex flex-row space-x-4'>
-        <Input onChange={(e) => setSelectedName(e.target.value)} placeholder="Summoner Name" className="w-64" />
-        <Input onChange={(e) => setSelectedTagLine(e.target.value)} placeholder="Tag Line" className="w-64" />
-        <Button variant={'outline'} onClick={() => {
-          console.log("Verify", selectedName, selectedTagLine);
-          if (selectedName && selectedTagLine) {
-            setIsVerified(true);
-          } else {
-            setIsVerified(false);
-          }
-        }}>Verify</Button>
-        {isVerified !== null ? isVerified === true ? <Check className='text-green-500 mt-1' /> : <Ban className='text-red-600 mt-1' /> : <></>}
-      </div>
+      <User />
       <div className='w-1/3'>
         <Select
-          options={roleOptions}
-          value={selectedRole}
-          onChange={(value) => setSelectedRole(value)}
+          options={roles?.map(role => ({ label: role?.name, value: role?.name })) ?? []}
+          value={selectedRole?.name}
+          onChange={(value) => setSelectedRole(roles?.find((role) => role.name === value) ?? null)}
           placeholder="Choose a Role"
         />
       </div>
@@ -63,10 +88,14 @@ function HomeComponent() {
         <Wheel
           count={champions?.length || 20}
           champions={champions || []}
-          onLock={(result) => {
-            console.log("Winner:", result.label);
+          locked={!!lockedChampion}
+          onPick={(result) => {
+            setSelectedChampion(result)
+            setWheelOpen(true)
           }} />
+        <WheelDialog champion={selectedChampion} role={selectedRole} open={WheelOpen} setOpen={setWheelOpen} onLock={(result) => onLockedChampion(result)} />
+        <LockDialog champion={selectedChampion} role={selectedRole} open={LockOpen} setOpen={setLockOpen} onVerify={onVerify} />
       </div>
-    </div>
+    </div >
   );
 }

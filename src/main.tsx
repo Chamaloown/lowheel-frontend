@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HttpClientProvider } from "./context/httpClientContext.tsx";
+import { UserProvider } from "./context/userContext.tsx";
 
 const queryClient = new QueryClient();
 
@@ -12,7 +13,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HttpClientProvider>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </QueryClientProvider>
     </HttpClientProvider>
   </StrictMode>,

@@ -3,24 +3,26 @@ import "./wheel.css";
 import type { Champion } from "@/types/champion";
 
 interface Segment {
-  label: string;
-  color: string;
+  label: string
+  color: string
+}
+
+interface WheelProps {
+  count: number
+  champions?: Champion[]
+  locked: boolean
+  onPick?: (champion: Champion) => void
 }
 
 const generateSegments = (count: number): Segment[] =>
   Array.from({ length: count }, (_, i) => ({
     label: ``,
-    //  gold, grey and black colors each for one third of the segments
     color: i % 3 === 0 ? 'oklch(0.7509 0.0856 83.92)' : i % 3 === 1 ? 'oklch(0.7509 0 290.12)' : 'oklch(0.3427 0 0)',
   }));
 
-interface WheelProps {
-  count: number;
-  champions?: Champion[];
-  onLock?: (segment: { index: number; label: string }) => void;
-}
 
-const Wheel: React.FC<WheelProps> = ({ count, champions, onLock }) => {
+
+const Wheel: React.FC<WheelProps> = ({ count, champions, locked, onPick }) => {
   const segments = useMemo(() => generateSegments(count), [count]);
   const championsSegments = useMemo(() => {
     if (!champions || champions.length === 0) return segments;
@@ -58,10 +60,10 @@ const Wheel: React.FC<WheelProps> = ({ count, champions, onLock }) => {
       const index = Math.floor(normalized / angleStep);
       const segment = championsSegments[index];
 
-      onLock?.({
-        index,
-        label: segment.label,
-      });
+
+      const champion = champions?.find((champ) => (champ.name === segment.label))
+      if (!champion) return
+      onPick?.(champion);
     }, 5000);
   };
 
@@ -137,7 +139,7 @@ const Wheel: React.FC<WheelProps> = ({ count, champions, onLock }) => {
       <button
         className="animate-pulse text-4xl bg-golden hover:bg-[#C8AAAA] text-white font-bold py-4 px-8 rounded-full shadow-lg disabled:opacity-50 disabled:cursor-not-allowed border-2 border-white"
         onClick={spin}
-        disabled={isSpinning}
+        disabled={isSpinning || locked}
       >
         MAKE IT TURN!
       </button>
