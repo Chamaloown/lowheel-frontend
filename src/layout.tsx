@@ -8,19 +8,71 @@ import {
 import { Link } from "@tanstack/react-router";
 import { BookOpen, LoaderPinwheel, Swords, Trophy } from "lucide-react";
 import { Toaster } from "sonner";
+import { useIsMobile } from "./hooks/useMobile";
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarProvider,
+    SidebarTrigger
+} from "./components/ui/sidebar";
+import { Footer } from "./components/footer/footer";
+
 
 export function Layout({ children }: { children: React.ReactNode }) {
+    const isMobile = useIsMobile()
+
     const navigationMenuItems = [
         { title: "Wheel", to: "/", icon: LoaderPinwheel },
         { title: "Success", to: "/success", icon: Trophy },
         { title: "About", to: "/about", icon: BookOpen },
         { title: "Leaderboard", to: "/leaderboard", icon: Swords },
     ];
+
+    if (isMobile) {
+        return (
+            <SidebarProvider>
+                <Sidebar>
+                    <SidebarHeader />
+                    <SidebarContent className="bg-black">
+                        <SidebarGroup />
+                        <SidebarMenu>
+                            {navigationMenuItems.map((item) => (
+                                <SidebarMenuItem key={item.title}>
+                                    <SidebarMenuButton asChild>
+                                        <Link to={item.to}>
+                                            <item.icon />
+                                            {item.title}
+                                        </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+
+                            ))}
+                        </SidebarMenu>
+                        <SidebarGroup />
+                    </SidebarContent>
+                    <SidebarFooter />
+                </Sidebar>
+                <main className="flex flex-col grow">
+                    <SidebarTrigger className=" absolute left-8 top-8" />
+                    {children}
+                    <Footer />
+                </main>
+                <Toaster />
+            </SidebarProvider>
+
+        )
+    }
     return (
         <div className="flex flex-col min-h-screen w-full">
             <div className="w-full flex justify-center items-center mt-4">
                 <NavigationMenu>
-                    <NavigationMenuList className="flex flex-row  space-x-7">
+                    <NavigationMenuList className="flex flex-row space-x-7">
                         {navigationMenuItems.map((item) => (
                             <NavigationMenuItem key={item.title}>
                                 <NavigationMenuLink
@@ -41,11 +93,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <main className="grow">
                 {children}
             </main>
+            <Footer />
             <Toaster />
-            <footer className="w-full p-4 text-[10px] text-gray-500 text-center">
-                This website is not affiliated with, endorsed, sponsored, or specifically approved by Riot Games, Inc.
-                League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc.
-            </footer>
         </div>
     );
 

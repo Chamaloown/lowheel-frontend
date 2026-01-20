@@ -6,9 +6,12 @@ export const Route = createFileRoute('/leaderboard')({
 
 function LeaderboardComponent() {
     return (
-        <div className="flex flex-col items-center p-4 space-y-20">
-            <h1 className="text-6xl mt-20">Leaderboard</h1>
-            <div className='mt-42'>
+        <div className="flex flex-col lg:justify-center items-center lg:p-4 lg:space-y-20 bg-green-500 grow">
+            <h1 className="text-xl lg:text-6xl m-8 lg:mt-20">Leaderboard</h1>
+            <div>
+                Rule theme all!
+            </div>
+            <div className='lg:mt-42'>
                 ⚠️ WORK IN PROGRESS ⚠️
             </div>
 

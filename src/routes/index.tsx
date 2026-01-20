@@ -10,7 +10,6 @@ import { useUser } from '@/context/userContext';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react';
-import { set } from 'react-hook-form';
 import { toast } from "sonner"
 
 
@@ -73,7 +72,7 @@ function HomeComponent() {
 
   return (
     <div className="flex flex-col items-center p-4 space-y-6" >
-      <h1 className="text-9xl">Lowheel</h1>
+      <h1 className="text-3xl md:text-6xl xl:text-9xl">Lowheel</h1>
       <h3>Autofill Wheel and collect your champ!</h3>
       <User />
       <div className='w-1/3'>
